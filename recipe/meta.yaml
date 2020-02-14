@@ -1,25 +1,23 @@
 {% set name = "scikit-MDR" %}
 {% set version = "0.4.4" %}
-{% set sha256 = "fc4e6710c7ac7a63c55641773388e43cc75bbe19f8d946bb8ac09eadb7d9eb2e" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  sha256: fc4e6710c7ac7a63c55641773388e43cc75bbe19f8d946bb8ac09eadb7d9eb2e
 
 build:
   number: 1
   noarch: python
-  script: python setup.py install --single-version-externally-managed --record record.txt
+  script: "{{ PYTHON }} -m pip install . -v --no-deps"
 
 requirements:
-  build:
+  host:
     - python
-    - setuptools
+    - pip
   run:
     - matplotlib-base
     - numpy
@@ -28,8 +26,12 @@ requirements:
     - scipy
 
 test:
+  requires:
+    - pip
   imports:
     - mdr
+  commands:
+    - pip check
 
 about:
   home: https://github.com/EpistasisLab/scikit-mdr
