@@ -1,16 +1,15 @@
-{% set name = "scikit-MDR" %}
 {% set version = "0.4.4" %}
 
 package:
-  name: {{ name|lower }}
+  name: scikit-mdr
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/s/scikit-mdr/scikit-MDR-{{ version }}.tar.gz
   sha256: fc4e6710c7ac7a63c55641773388e43cc75bbe19f8d946bb8ac09eadb7d9eb2e
 
 build:
-  number: 1
+  number: 2
   noarch: python
   script: "{{ PYTHON }} -m pip install . -v --no-deps"
 
@@ -26,12 +25,16 @@ requirements:
     - scipy
 
 test:
+  source_files:
+    - tests.py
   requires:
     - pip
+    - pytest-cov
   imports:
     - mdr
   commands:
     - pip check
+    - pytest -vv --cov=mdr --cov-report=term-missing:skip-covered --no-cov-on-fail
 
 about:
   home: https://github.com/EpistasisLab/scikit-mdr
