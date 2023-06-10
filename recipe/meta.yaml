@@ -28,6 +28,8 @@ test:
   source_files:
     - tests.py
   requires:
+    # TODO: remove this pin, as the compatible version outside of NEP29
+    - numpy <1.20
     - pip
     - pytest-cov
   imports:
