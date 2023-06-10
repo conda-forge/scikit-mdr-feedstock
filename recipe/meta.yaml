@@ -34,7 +34,7 @@ test:
     - mdr
   commands:
     - pip check
-    - pytest -vv --cov=mdr --cov-report=term-missing:skip-covered --no-cov-on-fail
+    - pytest -vv tests.py --cov=mdr --cov-report=term-missing:skip-covered --no-cov-on-fail
 
 about:
   home: https://github.com/EpistasisLab/scikit-mdr
