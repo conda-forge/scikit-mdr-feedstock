@@ -1,4 +1,4 @@
-{% set version = "0.4.4" %}
+{% set version = "0.4.5" %}
 
 package:
   name: scikit-mdr
@@ -6,12 +6,12 @@ package:
 
 source:
   url: https://pypi.io/packages/source/s/scikit-mdr/scikit-MDR-{{ version }}.tar.gz
-  sha256: fc4e6710c7ac7a63c55641773388e43cc75bbe19f8d946bb8ac09eadb7d9eb2e
+  sha256: 05b9a6a7835b0362866ae3c64fbe94535b9f91e6f2ebfd596a424622627aa03b
 
 build:
-  number: 2
+  number: 0
   noarch: python
-  script: "{{ PYTHON }} -m pip install . -v --no-deps"
+  script: {{ PYTHON }} -m pip install . -v --no-deps
 
 requirements:
   host:
