@@ -5,22 +5,22 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/s/scikit-mdr/scikit-MDR-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/s/scikit-mdr/scikit-MDR-{{ version }}.tar.gz
   sha256: 05b9a6a7835b0362866ae3c64fbe94535b9f91e6f2ebfd596a424622627aa03b
 
 build:
-  number: 0
+  number: 1
   noarch: python
   script: {{ PYTHON }} -m pip install . -v --no-deps
 
 requirements:
   host:
-    - python >=3.6
+    - python {{ python_min }}
     - pip
   run:
     - matplotlib-base
     - numpy
-    - python >=3.6
+    - python >={{ python_min }}
     - scikit-learn
     - scipy
 
@@ -32,6 +32,7 @@ test:
     - numpy <1.20
     - pip
     - pytest-cov
+    - python {{ python_min }}
   imports:
     - mdr
   commands:
