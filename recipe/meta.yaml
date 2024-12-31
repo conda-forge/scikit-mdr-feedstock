@@ -11,12 +11,14 @@ source:
 build:
   number: 1
   noarch: python
-  script: {{ PYTHON }} -m pip install . -v --no-deps
+  script:
+    - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
 
 requirements:
   host:
-    - python {{ python_min }}
     - pip
+    - python {{ python_min }}
+    - setuptools
   run:
     - matplotlib-base
     - numpy
@@ -37,7 +39,8 @@ test:
     - mdr
   commands:
     - pip check
-    - pytest -vv tests.py --cov=mdr --cov-report=term-missing:skip-covered --no-cov-on-fail
+    - coverage run --source=mdr --branch -m pytest -vv --tb=long --color=yes tests.py 
+    - coverage report --show-missing --skip-covered
 
 about:
   home: https://github.com/EpistasisLab/scikit-mdr
