@@ -1,56 +1,62 @@
-{% set version = "0.4.6" %}
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+schema_version: 1
+
+context:
+  version: 0.4.6
 
 package:
   name: scikit-mdr
-  version: {{ version }}
+  version: ${{ version }}
 
 source:
-  url: https://pypi.org/packages/source/s/scikit-mdr/scikit_mdr-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/s/scikit-mdr/scikit_mdr-${{ version }}.tar.gz
   sha256: 4790c5dadf87061381aee360b8cc96021f33a6c9348ba827eb7e9c4f3d6ddc3e
 
 build:
   number: 0
   noarch: python
   script:
-    - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
+    - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
 
 requirements:
   host:
     - pip
-    - python {{ python_min }}
+    - python ${{ python_min }}.*
     - setuptools
   run:
     - matplotlib-base
     - numpy
-    - python >={{ python_min }}
+    - python >=${{ python_min }}
     - scikit-learn
     - scipy
 
-test:
-  source_files:
-    - tests.py
-  requires:
-    # TODO: remove this pin, as the compatible version outside of NEP29
-    - numpy <1.20
-    - pip
-    - pytest-cov
-    - python {{ python_min }}
-  imports:
-    - mdr
-  commands:
-    - pip check
-    - coverage run --source=mdr --branch -m pytest -vv --tb=long --color=yes tests.py
-    - coverage report --show-missing --skip-covered
+tests:
+  - python:
+      imports: mdr
+      pip_check: true
+      python_version:
+        - ${{ python_min }}.*
+        - 3.13.*
+  - files:
+      source:
+        - tests.py
+    requirements:
+      run:
+        - numpy
+        - pytest-cov
+        - python ${{ python_min }}
+    script:
+      - coverage run --source=mdr --branch -m pytest -vv --tb=long --color=yes tests.py
+      - coverage report --show-missing --skip-covered
 
 about:
-  home: https://github.com/EpistasisLab/scikit-mdr
   license: MIT
-  license_family: MIT
   license_file: LICENSE
   summary: |
     A sklearn-compatible Python implementation of Multifactor Dimensionality
     Reduction (MDR) for feature construction.
-
+  homepage: https://github.com/EpistasisLab/scikit-mdr
+  repository: https://github.com/EpistasisLab/scikit-mdr
   description: |
     MDR is an effective feature construction algorithm that is capable of
     modeling higher-order interactions and capturing complex patterns in data
@@ -59,7 +65,6 @@ about:
     MDR currently only works with categorical features and supports both binary
     classification and regression problems. We are working on expanding the
     algorithm to cover more problem types and provide more convenience features.
-  dev_url: https://github.com/EpistasisLab/scikit-mdr
 
 extra:
   recipe-maintainers:
