@@ -1,15 +1,15 @@
-{% set version = "0.4.5" %}
+{% set version = "0.4.6" %}
 
 package:
   name: scikit-mdr
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/s/scikit-mdr/scikit-MDR-{{ version }}.tar.gz
-  sha256: 05b9a6a7835b0362866ae3c64fbe94535b9f91e6f2ebfd596a424622627aa03b
+  url: https://pypi.org/packages/source/s/scikit-mdr/scikit_mdr-{{ version }}.tar.gz
+  sha256: 4790c5dadf87061381aee360b8cc96021f33a6c9348ba827eb7e9c4f3d6ddc3e
 
 build:
-  number: 1
+  number: 0
   noarch: python
   script:
     - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
@@ -39,7 +39,7 @@ test:
     - mdr
   commands:
     - pip check
-    - coverage run --source=mdr --branch -m pytest -vv --tb=long --color=yes tests.py 
+    - coverage run --source=mdr --branch -m pytest -vv --tb=long --color=yes tests.py
     - coverage report --show-missing --skip-covered
 
 about:
