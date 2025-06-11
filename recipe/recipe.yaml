@@ -1,0 +1,75 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+schema_version: 1
+
+context:
+  version: 0.4.6
+
+package:
+  name: scikit-mdr
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/s/scikit-mdr/scikit_mdr-${{ version }}.tar.gz
+  sha256: 4790c5dadf87061381aee360b8cc96021f33a6c9348ba827eb7e9c4f3d6ddc3e
+
+build:
+  number: 0
+  noarch: python
+  script:
+    - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
+
+requirements:
+  host:
+    - pip
+    - python ${{ python_min }}.*
+    - setuptools
+  run:
+    - matplotlib-base
+    - numpy
+    - python >=${{ python_min }}
+    - scikit-learn
+    - scipy
+
+tests:
+  - python:
+      imports: mdr
+      pip_check: true
+      python_version:
+        - ${{ python_min }}.*
+        - 3.13.*
+  - files:
+      source:
+        - tests.py
+    requirements:
+      run:
+        - numpy
+        - pytest-cov
+        - python ${{ python_min }}.*
+    script:
+      - coverage run --source=mdr --branch -m pytest -vv --tb=long --color=yes tests.py
+      - coverage report --show-missing --skip-covered --fail-under=61
+
+about:
+  license: MIT
+  license_file: LICENSE
+  summary: |
+    A sklearn-compatible Python implementation of Multifactor Dimensionality
+    Reduction (MDR) for feature construction.
+  homepage: https://github.com/EpistasisLab/scikit-mdr
+  repository: https://github.com/EpistasisLab/scikit-mdr
+  description: |
+    MDR is an effective feature construction algorithm that is capable of
+    modeling higher-order interactions and capturing complex patterns in data
+    sets.
+
+    MDR currently only works with categorical features and supports both binary
+    classification and regression problems. We are working on expanding the
+    algorithm to cover more problem types and provide more convenience features.
+
+extra:
+  recipe-maintainers:
+    - bollwyvl
+    - lacava
+    - rhiever
+    - weixuanfu
+    - jay-m-dev

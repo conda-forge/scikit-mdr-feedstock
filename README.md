@@ -10,7 +10,6 @@ Package license: MIT
 Summary: A sklearn-compatible Python implementation of Multifactor Dimensionality
 Reduction (MDR) for feature construction.
 
-
 Development: https://github.com/EpistasisLab/scikit-mdr
 
 MDR is an effective feature construction algorithm that is capable of
@@ -20,7 +19,6 @@ sets.
 MDR currently only works with categorical features and supports both binary
 classification and regression problems. We are working on expanding the
 algorithm to cover more problem types and provide more convenience features.
-
 
 Current build status
 ====================
