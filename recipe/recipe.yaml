@@ -44,7 +44,7 @@ tests:
       run:
         - numpy
         - pytest-cov
-        - python ${{ python_min }}
+        - python ${{ python_min }}.*
     script:
       - coverage run --source=mdr --branch -m pytest -vv --tb=long --color=yes tests.py
       - coverage report --show-missing --skip-covered
